@@ -1,74 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="644"
-   height="250"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.48.5 r10040"
-   sodipodi:docname="New document 1">
-  <defs
-     id="defs4" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#000000"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="1"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="323.92424"
-     inkscape:cy="113.89654"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:window-width="1366"
-     inkscape:window-height="721"
-     inkscape:window-x="-2"
-     inkscape:window-y="-3"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata7">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-802.36218)">
-    <rect
-       style="fill:#00ff00;fill-opacity:1;stroke:none"
-       id="rect3765"
-       width="530"
-       height="180"
-       x="35"
-       y="837.36218"
-       rx="25"
-       ry="25" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="M 40 0 C 17.84 0 0 17.84 0 40 L 0 210 C 0 232.16 17.84 250 40 250 L 560 250 C 582.16 250 600 232.16 600 210 L 600 189 L 624 189 C 635.08 189 644 180.08 644 169 L 644 81 C 644 69.92 635.08 61 624 61 L 600 61 L 600 40 C 600 17.84 582.16 0 560 0 L 40 0 z M 55 25 L 545 25 C 561.62 25 575 38.38 575 55 L 575 195 C 575 211.62002 561.62 225 545 225 L 55 225 C 38.38 225 25 211.62002 25 195 L 25 55 C 25 38.38 38.38 25 55 25 z "
-       id="rect2985"
-       transform="translate(0,802.36218)" />
-  </g>
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    width="644"
+    height="250">
+    <g>
+        <rect
+            id="level"
+            width="530"
+            height="180"
+            rx="25"
+            ry="25"
+            x="35"
+            y="35"
+            style="fill:#00ff00;stroke:none" />
+        <path
+            d="M 40,0 C 17.84,0 0,17.84 0,40 l 0,170 c 0,22.16 17.84,40 40,40 l 520,0 c 22.16,0 40,-17.84 40,-40 l 0,-21 24,0 c 11.08,0 20,-8.92 20,-20 l 0,-88 c 0,-11.08 -8.92,-20 -20,-20 l -24,0 0,-21 C 600,17.84 582.16,0 560,0 L 40,0 z m 15,25 490,0 c 16.62,0 30,13.38 30,30 l 0,140 c 0,16.62002 -13.38,30 -30,30 L 55,225 C 38.38,225 25,211.62002 25,195 L 25,55 C 25,38.38 38.38,25 55,25 z"
+            style="fill:#ffffff;stroke:none" />
+    </g>
 </svg>

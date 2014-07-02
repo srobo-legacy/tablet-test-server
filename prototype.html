@@ -32,6 +32,11 @@
         <script>
             var startDate = moment();
 
+            var isAtBottom = function() {
+                var main = document.querySelector("main");
+                return Math.abs((main.scrollTop + main.clientHeight) - main.scrollHeight) <= 10;
+            };
+
             var scrollToBottom = function() {
                 var main = document.querySelector("main");
                 main.scrollTop = main.scrollHeight;
@@ -41,12 +46,16 @@
                 var tbody = document.querySelector("main > table tbody");
                 var newRow = tbody.insertRow(tbody.rows.length);
 
+                var shouldScroll = isAtBottom();
+
                 var dateStr = moment().format("HH:mm:ss");
                 newRow.insertCell(0).appendChild(document.createTextNode(dateStr));
 
                 newRow.insertCell(1).appendChild(document.createTextNode(message));
 
-                scrollToBottom();
+                if (shouldScroll) {
+                    scrollToBottom();
+                }
             };
 
             var randomString = function() {
@@ -67,6 +76,7 @@
                 setTimeout(logForever, Math.random() * 2000);
             };
 
+            scrollToBottom();
             logForever();
         </script>
     </body>

@@ -1,0 +1,13 @@
+{
+    "name": "Student Robotics",
+    "description": "Student Robotics Tablet Interface",
+    "launch_path": "/",
+    "icons": {
+        "128": "/images/icon.png"
+    },
+    "developer": {
+        "name": "Student Robotics",
+        "url": "https://www.studentrobotics.org"
+    },
+    "default_locale": "en-GB"
+}

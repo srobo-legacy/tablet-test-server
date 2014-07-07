@@ -1,5 +1,7 @@
 package org.studentrobotics.tablet;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,24 +22,13 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        WebView webView = (WebView) findViewById(R.id.web_view);
-        setUpWebView(webView);
-        webView.loadUrl("http://152.78.206.90:8000");
-    }
-
-    private void setUpWebView(WebView webView) {
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage cm) {
-                Log.d(TAG, cm.message() + " - line " + cm.lineNumber() + " of " + cm.sourceId());
-                return true;
-            }
-
-        });
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
+        if (savedInstanceState == null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://152.78.206.90:8000"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

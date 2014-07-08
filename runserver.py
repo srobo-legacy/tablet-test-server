@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+import time
+
 import flask
 
 
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")
+start_time = time.time()
 mode = "dev"
 zone = 0
 
@@ -27,5 +30,13 @@ def settings_zone():
     if flask.request.method == "PUT":
         zone = flask.request.json["zone"]
     return flask.jsonify(zone=zone)
+
+
+@app.route("/battery")
+def battery():
+    global start_time
+    level = 1 - ((time.time() - start_time) / 1000)
+    return flask.jsonify(level=level)
+
 
 app.run(port=8000, debug=True)

@@ -43,7 +43,7 @@ def settings_zone():
 @app.route("/battery")
 def battery():
     global start_time
-    level = 1 - ((time.time() - start_time) / 1000)
+    level = 1 - ((time.time() - start_time) / 2000)
     return flask.jsonify(level=level)
 
 

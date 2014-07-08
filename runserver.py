@@ -25,8 +25,8 @@ def settings_mode():
     global mode
     if flask.request.method == "PUT":
         global log_list
-        log_list.append("Changed mode to: {}".format(mode))
         mode = flask.request.json["mode"]
+        log_list.append("Changed mode to: {}".format(mode))
     return flask.jsonify(mode=mode)
 
 
@@ -35,8 +35,8 @@ def settings_zone():
     global zone
     if flask.request.method == "PUT":
         global log_list
-        log_list.append("Changed zone to: {}".format(zone))
         zone = flask.request.json["zone"]
+        log_list.append("Changed zone to: {}".format(zone))
     return flask.jsonify(zone=zone)
 
 

@@ -12,6 +12,7 @@ sockets = flask_sockets.Sockets(app)
 start_time = time.time()
 mode = "dev"
 zone = 0
+state = "stopped"
 log_list = []
 
 
@@ -51,6 +52,12 @@ def battery():
 def log():
     global log_list
     return flask.jsonify(log="\n".join(log_list))
+
+
+@app.route("/state")
+def get_state():
+    global state
+    return flask.jsonify(state=state)
 
 
 @sockets.route("/ws/log")

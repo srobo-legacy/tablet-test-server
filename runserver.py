@@ -1,7 +1,13 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+import flask
 
-import SimpleHTTPServer
-import SocketServer
-SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map['.webapp'] = 'application/x-web-app-manifest+json'
-httpd = SocketServer.TCPServer(("", 8000), SimpleHTTPServer.SimpleHTTPRequestHandler)
-httpd.serve_forever()
+
+app = flask.Flask(__name__, template_folder=".", static_folder=".", static_url_path="")
+
+
+@app.route("/")
+def index():
+    return flask.render_template("index.html")
+
+
+app.run(port=8000, debug=True)

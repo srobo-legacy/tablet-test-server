@@ -1,11 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 import time
 
 import flask
+import flask_sockets
 
 
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")
+app.config["DEBUG"] = True
+sockets = flask_sockets.Sockets(app)
 start_time = time.time()
 mode = "dev"
 zone = 0
@@ -50,4 +53,16 @@ def log():
     return flask.jsonify(log="\n".join(log_list))
 
 
-app.run(port=8000, debug=True)
+@sockets.route("/ws/log")
+def log_socket(ws):
+    global log_list
+    i = len(log_list)
+    while True:
+        if i < len(log_list):
+            ws.send(log_list[i])
+            i += 1
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    app.run(port=8000, debug=True)

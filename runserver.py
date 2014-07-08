@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 import time
+import threading
 
 import flask
 import flask_sockets
@@ -58,6 +59,30 @@ def log():
 def get_state():
     global state
     return flask.jsonify(state=state)
+
+
+@app.route("/start")
+def start():
+    global state
+    state = "booting"
+    def set_later():
+        global state
+        time.sleep(10)
+        state = "started"
+    threading.Thread(target=set_later).start()
+    return flask.jsonify()
+
+
+@app.route("/stop")
+def stop():
+    global state
+    state = "stopping"
+    def set_later():
+        global state
+        time.sleep(10)
+        state = "stopped"
+    threading.Thread(target=set_later).start()
+    return flask.jsonify()
 
 
 @sockets.route("/ws/log")

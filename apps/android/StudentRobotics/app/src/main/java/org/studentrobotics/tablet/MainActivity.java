@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 
         if (savedInstanceState == null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://152.78.206.90:8000"));
+            intent.setData(Uri.parse("http://152.78.205.95:8000"));
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

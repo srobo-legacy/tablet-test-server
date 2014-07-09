@@ -58,7 +58,10 @@ def log():
 @app.route("/state")
 def get_state():
     global state
-    return flask.jsonify(state=state)
+    return flask.jsonify(state=state,
+                         project=dict(name="myproject",
+                                      version="dsahldha98r239hawoa"),
+                         pyenv=dict(version="5"))
 
 
 @app.route("/start")

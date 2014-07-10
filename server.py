@@ -15,7 +15,7 @@ class MyBackendComponent(autobahn.asyncio.wamp.ApplicationSession):
         counter = 1.0
         while True:
             self.publish("org.srobo.battery.level", counter)
-            counter -= 0.01
+            counter -= 0.0001
             yield from asyncio.sleep(1)
 
 

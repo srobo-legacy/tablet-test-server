@@ -1,52 +1,53 @@
-#!/usr/bin/env python3
-import asyncio
+#!/usr/bin/env python
+import crochet; crochet.setup()
+import flask
 
-import autobahn.asyncio.wamp
-import autobahn.asyncio.websocket
-import autobahn.wamp.router
-
-
-class MyBackendComponent(autobahn.asyncio.wamp.ApplicationSession):
-    def onConnect(self):
-        self.join(u"org.srobo")
-
-    @asyncio.coroutine
-    def onJoin(self, details):
-        def set_mode(msg):
-            self.mode = msg
-
-        yield from self.subscribe(set_mode, "org.srobo.mode")
-        self.register(lambda: self.mode, "org.srobo.mode")
-
-        def set_zone(zone):
-            self.zone = zone
-
-        yield from self.subscribe(set_zone, "org.srobo.zone")
-        self.register(lambda: self.zone, "org.srobo.zone")
-
-        counter = 1.0
-        while True:
-            self.publish("org.srobo.battery.level", counter)
-            counter -= 0.0001
-            yield from asyncio.sleep(1)
+from autobahn.twisted import wamp
 
 
+g = dict(zone=0)
+
+################################################################################
+wapp = wamp.Application()
+
+
+@wapp.register("org.srobo.zone")
+def wapp_get_zone():
+    return g["zone"]
+
+
+@wapp.subscribe("org.srobo.zone")
+def wapp_sub_zone(zone):
+    g["zone"] = zone
+
+
+################################################################################
+app = flask.Flask(__name__, template_folder=".", static_folder=".",
+                  static_url_path="")
+app.config["DEBUG"] = True
+
+
+@app.route("/")
+def index():
+    return flask.render_template("index.html")
+
+
+@app.route("/settings/zone")
+def app_get_zone():
+    @crochet.wait_for(timeout=1)
+    def call_get_zone():
+        return wapp.session.call("org.srobo.zone")
+
+    return flask.jsonify(zone=call_get_zone())
+
+
+################################################################################
 if __name__ == "__main__":
-    router_factory = autobahn.wamp.router.RouterFactory()
-    session_factory = autobahn.asyncio.wamp.RouterSessionFactory(router_factory)
-    session_factory.add(MyBackendComponent())
-    transport_factory = autobahn.asyncio.websocket.WampWebSocketServerFactory(session_factory,
-                                                                              debug=False,
-                                                                              debug_wamp=False)
+    @crochet.run_in_reactor
+    def start_wamp():
+        wapp.run("ws://0.0.0.0:9000", "srobo", standalone=True,
+                 start_reactor=False)
 
-    loop = asyncio.get_event_loop()
-    coro = loop.create_server(transport_factory, "0.0.0.0", 8080)
-    server = loop.run_until_complete(coro)
+    start_wamp()
 
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        server.close()
-        loop.close()
+    app.run(host="0.0.0.0", port=8000, debug=True)

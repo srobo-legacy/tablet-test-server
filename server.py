@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import crochet; crochet.setup()
 import flask
-
+import twisted.internet
 from autobahn.twisted import wamp
 
 
-g = dict(zone=0)
+g = dict(zone=0, mode="dev", level=1)
 
 ################################################################################
 wapp = wamp.Application()
@@ -19,6 +19,16 @@ def wapp_get_zone():
 @wapp.subscribe("org.srobo.zone")
 def wapp_sub_zone(zone):
     g["zone"] = zone
+
+
+@wapp.register("org.srobo.mode")
+def wapp_get_mode():
+    return g["mode"]
+
+
+@wapp.subscribe("org.srobo.mode")
+def wapp_sub_mode(mode):
+    g["mode"] = mode
 
 
 ################################################################################
@@ -41,12 +51,36 @@ def app_get_zone():
     return flask.jsonify(zone=call_get_zone())
 
 
+@app.route("/settings/mode")
+def app_get_mode():
+    @crochet.wait_for(timeout=1)
+    def call_get_mode():
+        return wapp.session.call("org.srobo.mode")
+
+    return flask.jsonify(mode=call_get_mode())
+
+
+@app.route("/battery")
+def app_get_battery():
+    return flask.jsonify(level=g["level"])
+
+
 ################################################################################
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
     @crochet.run_in_reactor
     def start_wamp():
         wapp.run("ws://0.0.0.0:9000", "srobo", standalone=True,
                  start_reactor=False)
+
+        def publish_battery():
+            g["level"] -= 0.001
+            wapp.session.publish("org.srobo.battery.level", g["level"])
+
+        l = twisted.internet.task.LoopingCall(publish_battery)
+        l.start(1, now=False)
 
     start_wamp()
 

@@ -80,6 +80,11 @@ def wapp_get_state():
     return g["state"]
 
 
+@wapp.register("org.srobo.pyenv.version")
+def wapp_get_pyenv_version():
+    return "v1"
+
+
 ################################################################################
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")

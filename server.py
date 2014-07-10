@@ -12,11 +12,17 @@ class MyBackendComponent(autobahn.asyncio.wamp.ApplicationSession):
 
     @asyncio.coroutine
     def onJoin(self, details):
-        def onevent(msg):
+        def set_mode(msg):
             self.mode = msg
 
-        yield from self.subscribe(onevent, "org.srobo.mode")
+        yield from self.subscribe(set_mode, "org.srobo.mode")
         self.register(lambda: self.mode, "org.srobo.mode")
+
+        def set_zone(zone):
+            self.zone = zone
+
+        yield from self.subscribe(set_zone, "org.srobo.zone")
+        self.register(lambda: self.zone, "org.srobo.zone")
 
         counter = 1.0
         while True:

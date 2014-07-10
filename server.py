@@ -56,6 +56,9 @@ def sleep(delay):
 
 @wapp.register("org.srobo.start")
 def wrap_start():
+    wapp.session.publish("org.srobo.project.name", "my project")
+    wapp.session.publish("org.srobo.project.version", "dar3t43r23")
+
     g["state"] = "booting"
     wapp.session.publish("org.srobo.state", "booting")
     yield sleep(5)

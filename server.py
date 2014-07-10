@@ -5,10 +5,15 @@ import twisted.internet
 from autobahn.twisted import wamp
 
 
-g = dict(zone=0, mode="dev", level=1)
+g = dict(zone=0, mode="dev", level=1, log=[])
 
 ################################################################################
 wapp = wamp.Application()
+
+
+def log(m):
+    wapp.session.publish("org.srobo.log", m)
+    g["log"].append(m)
 
 
 @wapp.register("org.srobo.zone")
@@ -18,6 +23,7 @@ def wapp_get_zone():
 
 @wapp.subscribe("org.srobo.zone")
 def wapp_sub_zone(zone):
+    log("Zone changed to: {}".format(zone))
     g["zone"] = zone
 
 
@@ -28,7 +34,18 @@ def wapp_get_mode():
 
 @wapp.subscribe("org.srobo.mode")
 def wapp_sub_mode(mode):
+    log("Mode changed to: {}".format(mode))
     g["mode"] = mode
+
+
+@wapp.subscribe("org.srobo.log")
+def wrap_sub_log(log):
+    g["log"].append(log)
+
+
+@wapp.register("org.srobo.log")
+def wapp_get_log():
+    return "\n".join(g["log"])
 
 
 ################################################################################
@@ -58,6 +75,15 @@ def app_get_mode():
         return wapp.session.call("org.srobo.mode")
 
     return flask.jsonify(mode=call_get_mode())
+
+
+@app.route("/log")
+def app_get_log():
+    @crochet.wait_for(timeout=1)
+    def call_get_log():
+        return wapp.session.call("org.srobo.log")
+
+    return flask.jsonify(log=call_get_log())
 
 
 @app.route("/battery")

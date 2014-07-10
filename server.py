@@ -5,7 +5,7 @@ import twisted.internet
 from autobahn.twisted import wamp
 
 
-g = dict(zone=0, mode="dev", level=1, log=[])
+g = dict(zone=0, mode="dev", level=1, log=[], state="stopped")
 
 ################################################################################
 wapp = wamp.Application()
@@ -46,6 +46,35 @@ def wrap_sub_log(log):
 @wapp.register("org.srobo.log")
 def wapp_get_log():
     return "\n".join(g["log"])
+
+
+def sleep(delay):
+    d = twisted.internet.defer.Deferred()
+    twisted.internet.reactor.callLater(delay, d.callback, None)
+    return d
+
+
+@wapp.register("org.srobo.start")
+def wrap_start():
+    g["state"] = "booting"
+    wapp.session.publish("org.srobo.state", "booting")
+    yield sleep(5)
+    g["state"] = "started"
+    wapp.session.publish("org.srobo.state", "started")
+
+
+@wapp.register("org.srobo.stop")
+def wrap_start():
+    g["state"] = "stopping"
+    wapp.session.publish("org.srobo.state", "stopping")
+    yield sleep(5)
+    g["state"] = "stopped"
+    wapp.session.publish("org.srobo.state", "stopped")
+
+
+@wapp.register("org.srobo.state")
+def wapp_get_state():
+    return g["state"]
 
 
 ################################################################################

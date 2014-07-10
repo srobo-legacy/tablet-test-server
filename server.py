@@ -12,6 +12,12 @@ class MyBackendComponent(autobahn.asyncio.wamp.ApplicationSession):
 
     @asyncio.coroutine
     def onJoin(self, details):
+        def onevent(msg):
+            self.mode = msg
+
+        yield from self.subscribe(onevent, "org.srobo.mode")
+        self.register(lambda: self.mode, "org.srobo.mode")
+
         counter = 1.0
         while True:
             self.publish("org.srobo.battery.level", counter)
@@ -24,8 +30,8 @@ if __name__ == "__main__":
     session_factory = autobahn.asyncio.wamp.RouterSessionFactory(router_factory)
     session_factory.add(MyBackendComponent())
     transport_factory = autobahn.asyncio.websocket.WampWebSocketServerFactory(session_factory,
-                                                                              debug=True,
-                                                                              debug_wamp=True)
+                                                                              debug=False,
+                                                                              debug_wamp=False)
 
     loop = asyncio.get_event_loop()
     coro = loop.create_server(transport_factory, "0.0.0.0", 8080)

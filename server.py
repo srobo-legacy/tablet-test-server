@@ -91,6 +91,13 @@ app = flask.Flask(__name__, template_folder=".", static_folder=".",
 app.config["DEBUG"] = True
 
 
+@app.after_request
+def add_header(response):
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
+
+
 @app.route("/")
 def index():
     return flask.render_template("index.html")

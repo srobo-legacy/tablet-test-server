@@ -11,7 +11,17 @@ g = dict(zone=0,
          log=[],
          state="stopped",
          pyenv=dict(version=1),
-         project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"))
+         project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
+         servos=[
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False),
+             dict(value=50, state=False)
+         ])
 
 ################################################################################
 wapp = wamp.Application()
@@ -100,6 +110,21 @@ def wapp_get_project_name():
 @wapp.register("org.srobo.project.version")
 def wapp_get_project_version():
     return g["project"]["version"]
+
+
+@wapp.subscribe("org.srobo.servos.value")
+def wapp_sub_mode(index, value):
+    g["servos"][index]["value"] = value
+
+
+@wapp.subscribe("org.srobo.servos.state")
+def wapp_sub_mode(index, state):
+    g["servos"][index]["state"] = state
+
+
+@wapp.register("org.srobo.servos")
+def wapp_get_servos():
+    return g["servos"]
 
 
 ################################################################################

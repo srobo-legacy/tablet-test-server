@@ -5,7 +5,13 @@ import twisted.internet
 from autobahn.twisted import wamp
 
 
-g = dict(zone=0, mode="dev", level=1, log=[], state="stopped")
+g = dict(zone=0,
+         mode="dev",
+         level=1,
+         log=[],
+         state="stopped",
+         pyenv=dict(version=1),
+         project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"))
 
 ################################################################################
 wapp = wamp.Application()
@@ -82,7 +88,17 @@ def wapp_get_state():
 
 @wapp.register("org.srobo.pyenv.version")
 def wapp_get_pyenv_version():
-    return "v1"
+    return g["pyenv"]["version"]
+
+
+@wapp.register("org.srobo.project.name")
+def wapp_get_project_name():
+    return g["project"]["name"]
+
+
+@wapp.register("org.srobo.project.version")
+def wapp_get_project_version():
+    return g["project"]["version"]
 
 
 ################################################################################

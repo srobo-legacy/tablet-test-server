@@ -62,8 +62,9 @@ def sleep(delay):
 
 @wapp.register("org.srobo.start")
 def wrap_start():
-    wapp.session.publish("org.srobo.project.name", "my project")
-    wapp.session.publish("org.srobo.project.version", "dar3t43r23")
+    wapp.session.publish("org.srobo.project.name", g["project"]["name"])
+    wapp.session.publish("org.srobo.project.version", g["project"]["version"])
+    wapp.session.publish("org.srobo.pyenv.version", g["pyenv"]["version"])
 
     g["state"] = "booting"
     wapp.session.publish("org.srobo.state", "booting")

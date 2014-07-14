@@ -201,8 +201,8 @@ if __name__ == "__main__":
                  start_reactor=False)
 
         def publish_battery():
-            g["battery"]["level"] -= 0.001
-            if g["battery"]["level"] >= 0:
+            if g["battery"]["level"] > 0:
+                g["battery"]["level"] -= 0.001
                 wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
 
         l = twisted.internet.task.LoopingCall(publish_battery)

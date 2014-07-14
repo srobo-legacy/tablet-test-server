@@ -7,7 +7,7 @@ from autobahn.twisted import wamp
 
 g = dict(zone=0,
          mode="dev",
-         level=1,
+         battery=dict(level=1),
          log=[],
          state="stopped",
          pyenv=dict(version=1),
@@ -137,6 +137,16 @@ def wapp_get_servos():
     return g["servo_boards"]
 
 
+@wapp.register("org.srobo.battery")
+def wapp_get_battery():
+    return g["battery"]
+
+
+@wapp.register("org.srobo.battery.level")
+def wapp_get_battery_level():
+    return g["battery"]["level"]
+
+
 ################################################################################
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")
@@ -157,34 +167,27 @@ def index():
 
 @app.route("/settings/zone")
 def app_get_zone():
-    @crochet.wait_for(timeout=1)
-    def call_get_zone():
-        return wapp.session.call("org.srobo.zone")
-
-    return flask.jsonify(zone=call_get_zone())
+    return flask.jsonify(zone=g["zone"])
 
 
 @app.route("/settings/mode")
 def app_get_mode():
-    @crochet.wait_for(timeout=1)
-    def call_get_mode():
-        return wapp.session.call("org.srobo.mode")
-
-    return flask.jsonify(mode=call_get_mode())
+    return flask.jsonify(zone=g["mode"])
 
 
 @app.route("/log")
 def app_get_log():
-    @crochet.wait_for(timeout=1)
-    def call_get_log():
-        return wapp.session.call("org.srobo.log")
-
-    return flask.jsonify(log=call_get_log())
+    return flask.jsonify(log="\n".join(g["log"]))
 
 
 @app.route("/battery")
 def app_get_battery():
-    return flask.jsonify(level=g["level"])
+    return flask.jsonify(battery=g["battery"])
+
+
+@app.route("/battery/level")
+def app_get_battery_level():
+    return flask.jsonify(level=g["battery"]["level"])
 
 
 ################################################################################
@@ -198,9 +201,9 @@ if __name__ == "__main__":
                  start_reactor=False)
 
         def publish_battery():
-            g["level"] -= 0.001
-            if g["level"] >= 0:
-                wapp.session.publish("org.srobo.battery.level", g["level"])
+            g["battery"]["level"] -= 0.001
+            if g["battery"]["level"] >= 0:
+                wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
 
         l = twisted.internet.task.LoopingCall(publish_battery)
         l.start(1, now=False)

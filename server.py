@@ -147,12 +147,12 @@ def wapp_get_project_version():
 
 @wapp.subscribe("org.srobo.servos.value")
 def wapp_sub_mode(board, index, value):
-    g["servo_boards"][board][index]["value"] = value
+    g["servo_boards"][board]["servos"][index]["value"] = value
 
 
 @wapp.subscribe("org.srobo.servos.state")
 def wapp_sub_mode(board, index, state):
-    g["servo_boards"][board][index]["state"] = state
+    g["servo_boards"][board]["servos"][index]["state"] = state
 
 
 @wapp.register("org.srobo.servos")

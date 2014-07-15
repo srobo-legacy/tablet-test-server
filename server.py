@@ -63,6 +63,17 @@ g = dict(zone=0,
                      dict(value=0)
                  ]
              )
+         ],
+         ruggeduinos=[
+             dict(
+                 serial_number="abc"
+             ),
+             dict(
+                 serial_number="def"
+             ),
+             dict(
+                 serial_number="ghi"
+             )
          ])
 
 ################################################################################
@@ -177,6 +188,11 @@ def wapp_sub_mode(board, index, value):
 @wapp.register("org.srobo.motors")
 def wapp_get_motors():
     return g["motor_boards"]
+
+
+@wapp.register("org.srobo.ruggeduinos")
+def wapp_get_motors():
+    return g["ruggeduinos"]
 
 
 @wapp.register("org.srobo.battery")

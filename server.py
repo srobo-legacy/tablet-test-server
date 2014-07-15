@@ -31,6 +31,20 @@ g = dict(zone=0,
                  dict(value=50, state=False),
                  dict(value=50, state=False)
              ]
+         ],
+         motor_boards=[
+             [
+                 dict(value=0),
+                 dict(value=0)
+             ],
+             [
+                 dict(value=0)
+             ],
+             [
+                 dict(value=0),
+                 dict(value=0),
+                 dict(value=0)
+             ]
          ])
 
 ################################################################################
@@ -135,6 +149,16 @@ def wapp_sub_mode(board, index, state):
 @wapp.register("org.srobo.servos")
 def wapp_get_servos():
     return g["servo_boards"]
+
+
+@wapp.subscribe("org.srobo.motors.value")
+def wapp_sub_mode(board, index, value):
+    g["motor_boards"][board][index]["value"] = value
+
+
+@wapp.register("org.srobo.motors")
+def wapp_get_motors():
+    return g["motor_boards"]
 
 
 @wapp.register("org.srobo.battery")

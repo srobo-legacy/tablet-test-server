@@ -42,18 +42,27 @@ g = dict(zone=0,
              )
          ],
          motor_boards=[
-             [
-                 dict(value=0),
-                 dict(value=0)
-             ],
-             [
-                 dict(value=0)
-             ],
-             [
-                 dict(value=0),
-                 dict(value=0),
-                 dict(value=0)
-             ]
+             dict(
+                 serial_number="abc",
+                 motors=[
+                     dict(value=0),
+                     dict(value=0)
+                 ]
+             ),
+             dict(
+                 serial_number="def",
+                 motors=[
+                     dict(value=0)
+                 ]
+             ),
+             dict(
+                 serial_number="ghi",
+                 motors=[
+                     dict(value=0),
+                     dict(value=0),
+                     dict(value=0)
+                 ]
+             )
          ])
 
 ################################################################################
@@ -162,7 +171,7 @@ def wapp_get_servos():
 
 @wapp.subscribe("org.srobo.motors.value")
 def wapp_sub_mode(board, index, value):
-    g["motor_boards"][board][index]["value"] = value
+    g["motor_boards"][board]["motors"][index]["value"] = value
 
 
 @wapp.register("org.srobo.motors")

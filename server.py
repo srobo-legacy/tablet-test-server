@@ -135,6 +135,8 @@ def wrap_start():
     g["state"] = "started"
     wapp.session.publish("org.srobo.state", "started")
 
+    log("Robot started.")
+
 
 @wapp.register("org.srobo.stop")
 def wrap_start():
@@ -143,6 +145,8 @@ def wrap_start():
     yield sleep(5)
     g["state"] = "stopped"
     wapp.session.publish("org.srobo.state", "stopped")
+
+    log("Robot stopped.")
 
 
 @wapp.register("org.srobo.state")

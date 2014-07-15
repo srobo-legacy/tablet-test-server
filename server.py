@@ -13,24 +13,33 @@ g = dict(zone=0,
          pyenv=dict(version=1),
          project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
          servo_boards=[
-             [
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False)
-             ],
-             [
-                 dict(value=50, state=False),
-                 dict(value=50, state=False)
-             ],
-             [
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False),
-                 dict(value=50, state=False)
-             ]
+             dict(
+                 serial_number="abc",
+                 servos=[
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False)
+                 ]
+             ),
+             dict(
+                 serial_number="def",
+                 servos=[
+                     dict(value=50, state=False),
+                     dict(value=50, state=False)
+                 ]
+             ),
+             dict(
+                 serial_number="ghi",
+                 servos=[
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False),
+                     dict(value=50, state=False)
+                 ]
+             )
          ],
          motor_boards=[
              [

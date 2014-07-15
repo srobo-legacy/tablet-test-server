@@ -165,27 +165,27 @@ def wapp_get_project_version():
     return g["project"]["version"]
 
 
-@wapp.subscribe("org.srobo.servos.value")
+@wapp.subscribe("org.srobo.servo.value")
 def wapp_sub_mode(board, index, value):
     g["servo_boards"][board]["servos"][index]["value"] = value
 
 
-@wapp.subscribe("org.srobo.servos.state")
+@wapp.subscribe("org.srobo.servo.state")
 def wapp_sub_mode(board, index, state):
     g["servo_boards"][board]["servos"][index]["state"] = state
 
 
-@wapp.register("org.srobo.servos")
+@wapp.register("org.srobo.servo_boards")
 def wapp_get_servos():
     return g["servo_boards"]
 
 
-@wapp.subscribe("org.srobo.motors.value")
+@wapp.subscribe("org.srobo.motor.value")
 def wapp_sub_mode(board, index, value):
     g["motor_boards"][board]["motors"][index]["value"] = value
 
 
-@wapp.register("org.srobo.motors")
+@wapp.register("org.srobo.motor_boards")
 def wapp_get_motors():
     return g["motor_boards"]
 

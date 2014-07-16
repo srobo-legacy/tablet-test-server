@@ -12,7 +12,7 @@ class FlaskStaticCors(flask.Flask):
 app = FlaskStaticCors(__name__)
 
 
-@app.route("/custom_pages/info")
+@app.route("/custom_pages")
 @flask_cors.cross_origin()
 def custom_pages_info():
     return flask.jsonify(
@@ -25,12 +25,6 @@ def custom_pages_info():
             }
         ]
     )
-
-
-@app.route("/custom_pages/import")
-@flask_cors.cross_origin()
-def custom_pages_import():
-    return flask.send_file("static/elements/index.html")
 
 
 if __name__ == "__main__":

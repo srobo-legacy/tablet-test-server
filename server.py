@@ -21,12 +21,22 @@ g = dict(zone=0,
                      dict(value=50),
                      dict(value=50),
                      dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
                      dict(value=50)
                  ]
              ),
              dict(
                  serial_number="def",
                  servos=[
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
                      dict(value=50),
                      dict(value=50)
                  ]

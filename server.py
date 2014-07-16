@@ -16,28 +16,28 @@ g = dict(zone=0,
              dict(
                  serial_number="abc",
                  servos=[
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False)
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50)
                  ]
              ),
              dict(
                  serial_number="def",
                  servos=[
-                     dict(value=50, state=False),
-                     dict(value=50, state=False)
+                     dict(value=50),
+                     dict(value=50)
                  ]
              ),
              dict(
                  serial_number="ghi",
                  servos=[
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False),
-                     dict(value=50, state=False)
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50),
+                     dict(value=50)
                  ]
              )
          ],
@@ -172,11 +172,6 @@ def wapp_get_project_version():
 @wapp.subscribe("org.srobo.servo.value")
 def wapp_sub_mode(board, index, value):
     g["servo_boards"][board]["servos"][index]["value"] = value
-
-
-@wapp.subscribe("org.srobo.servo.state")
-def wapp_sub_mode(board, index, state):
-    g["servo_boards"][board]["servos"][index]["state"] = state
 
 
 @wapp.register("org.srobo.servo_boards")

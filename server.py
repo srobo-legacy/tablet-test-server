@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+import base64
 import crochet; crochet.setup()
 import flask
 import twisted.internet
+import os
 from autobahn.twisted import wamp
 
 
@@ -271,9 +273,24 @@ if __name__ == "__main__":
             if g["battery"]["level"] > 0:
                 g["battery"]["level"] -= 0.001
                 wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
-
         l = twisted.internet.task.LoopingCall(publish_battery)
         l.start(1, now=False)
+
+        temp_images = []
+        for filename in os.listdir("temp_images"):
+            with open("temp_images/" + filename) as file:
+                temp_images.append(base64.b64encode(file.read()))
+
+        global i
+        i = 0
+        def publish_camera():
+            global i
+            wapp.session.publish("org.srobo.camera.image", temp_images[i])
+            i += 1
+            if i >= len(temp_images):
+                i = 0
+        l = twisted.internet.task.LoopingCall(publish_camera)
+        l.start(10, now=False)
 
     start_wamp()
 

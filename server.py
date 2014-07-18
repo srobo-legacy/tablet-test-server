@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import base64
-import crochet; crochet.setup()
 import flask
+import crochet; crochet.setup()
 import twisted.internet
+import random
 import os
 from autobahn.twisted import wamp
 
@@ -229,7 +230,6 @@ def wapp_get_battery_level():
 ################################################################################
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")
-app.config["DEBUG"] = True
 
 
 @app.after_request
@@ -271,37 +271,30 @@ def app_get_battery_level():
 
 ################################################################################
 if __name__ == "__main__":
+    import sys
     import logging
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
     @crochet.run_in_reactor
     def start_wamp():
         wapp.run("ws://0.0.0.0:9000", "srobo", standalone=True,
                  start_reactor=False)
 
-        def publish_battery():
-            if g["battery"]["level"] > 0:
-                g["battery"]["level"] -= 0.001
-                wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
-        l = twisted.internet.task.LoopingCall(publish_battery)
-        l.start(1, now=False)
-
-        temp_images = []
-        for filename in os.listdir("temp_images"):
-            with open("temp_images/" + filename) as file:
-                temp_images.append(base64.b64encode(file.read()))
-
-        global i
-        i = 0
-        def publish_camera():
-            global i
-            wapp.session.publish("org.srobo.camera.image", temp_images[i])
-            i += 1
-            if i >= len(temp_images):
-                i = 0
-        l = twisted.internet.task.LoopingCall(publish_camera)
-        l.start(10, now=False)
-
     start_wamp()
 
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    def publish_battery():
+        if g["battery"]["level"] > 0:
+            g["battery"]["level"] -= 0.001
+            wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
+    l1 = twisted.internet.task.LoopingCall(publish_battery)
+    l1.start(1, now=False)
+
+    temp_images = os.listdir("temp_images")
+    def publish_camera():
+        print("publish_camera")
+        src = "/temp_images/{}".format(random.choice(temp_images))
+        wapp.session.publish("org.srobo.camera.image", src)
+    l2 = twisted.internet.task.LoopingCall(publish_camera)
+    l2.start(10, now=False)
+
+    app.run(host="0.0.0.0", port=8000)

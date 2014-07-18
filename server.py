@@ -291,7 +291,6 @@ if __name__ == "__main__":
 
     temp_images = os.listdir("temp_images")
     def publish_camera():
-        print("publish_camera")
         src = "/temp_images/{}".format(random.choice(temp_images))
         wapp.session.publish("org.srobo.camera.image", src)
     l2 = twisted.internet.task.LoopingCall(publish_camera)

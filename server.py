@@ -244,6 +244,11 @@ def wapp_sub_mode(board, index, value):
     g["servo_boards"][board]["servos"][index]["value"] = value
 
 
+@wapp.register("org.srobo.servo")
+def wapp_get_servo(board, index):
+    return g["servo_boards"][board]["servos"][index]
+
+
 @wapp.register("org.srobo.servo_boards")
 def wapp_get_servos():
     return g["servo_boards"]
@@ -252,6 +257,11 @@ def wapp_get_servos():
 @wapp.subscribe("org.srobo.motor.value")
 def wapp_sub_mode(board, index, value):
     g["motor_boards"][board]["motors"][index]["value"] = value
+
+
+@wapp.register("org.srobo.motor")
+def wapp_get_motor(board, index):
+    return g["motor_boards"][board]["motors"][index]
 
 
 @wapp.register("org.srobo.motor_boards")
@@ -272,6 +282,11 @@ def wapp_io_mode(board, pin, mode):
 @wapp.subscribe("org.srobo.io.value")
 def wapp_io_value(board, pin, value):
     g["ruggeduinos"][board]["pins"][pin]["value"] = value
+
+
+@wapp.register("org.srobo.io.pin")
+def wapp_get_io_pin(board, pin):
+    return g["ruggeduinos"][board]["pins"][pin]
 
 
 @wapp.register("org.srobo.battery")

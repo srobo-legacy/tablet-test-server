@@ -84,13 +84,70 @@ g = dict(zone=0,
          ],
          ruggeduinos=[
              dict(
-                 serial_number="abc"
+                 serial_number="abc",
+                 pins=[
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                 ]
              ),
              dict(
-                 serial_number="def"
+                 serial_number="def",
+                 pins=[
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                 ]
              ),
              dict(
-                 serial_number="ghi"
+                 serial_number="ghi",
+                 pins=[
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=False, type="digital"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                     dict(mode=None, value=0, type="analogue"),
+                 ]
              )
          ])
 

@@ -264,6 +264,16 @@ def wapp_get_motors():
     return g["ruggeduinos"]
 
 
+@wapp.subscribe("org.srobo.io.mode")
+def wapp_io_mode(board, pin, mode):
+    g["ruggeduinos"][board]["pins"][pin]["mode"] = mode
+
+
+@wapp.subscribe("org.srobo.io.value")
+def wapp_io_value(board, pin, value):
+    g["ruggeduinos"][board]["pins"][pin]["value"] = value
+
+
 @wapp.register("org.srobo.battery")
 def wapp_get_battery():
     return g["battery"]

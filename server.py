@@ -20,45 +20,44 @@ g = dict(zone=0,
          state="stopped",
          pyenv=dict(version=1),
          project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
-         servo_boards=[
-             dict(
-                 serial_number="abc",
-                 servos=[
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50)
+         servo_boards={
+             "abcde": {
+                 "servos": [
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50}
                  ]
-             ),
-             dict(
-                 serial_number="def",
-                 servos=[
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50)
+             },
+             "fghij": {
+                 "servos": [
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50}
                  ]
-             ),
-             dict(
-                 serial_number="ghi",
-                 servos=[
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50),
-                     dict(value=50)
+             },
+             "klmno": {
+                 "servos": [
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50},
+                     {"value": 50}
                  ]
-             )
-         ],
+             }
+         },
          motor_boards={
              "abcde": {
                  "motors": [{"value": 0}, {"value": 0}]
@@ -227,18 +226,23 @@ def wapp_get_project_version():
     return g["project"]["version"]
 
 
-@wapp.subscribe("org.srobo.servo.value")
-def wapp_sub_mode(board, index, value):
+@wapp.subscribe("org.srobo.servos.servo_value")
+def wapp_servos_servo_value(board, index, value):
     g["servo_boards"][board]["servos"][index]["value"] = value
 
 
-@wapp.register("org.srobo.servo")
-def wapp_get_servo(board, index):
+@wapp.register("org.srobo.servos.get_servo")
+def wapp_servos_get_servo(board, index):
     return g["servo_boards"][board]["servos"][index]
 
 
-@wapp.register("org.srobo.servo_boards")
-def wapp_get_servos():
+@wapp.register("org.srobo.servos.get_board")
+def wapp_servos_get_board(serial_number):
+    return g["servo_boards"][serial_number]
+
+
+@wapp.register("org.srobo.servos.all_boards")
+def wapp_servos_all_boards():
     return g["servo_boards"]
 
 

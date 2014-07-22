@@ -254,18 +254,23 @@ def wapp_get_servos():
     return g["servo_boards"]
 
 
-@wapp.subscribe("org.srobo.motor.value")
-def wapp_sub_mode(board, index, value):
+@wapp.subscribe("org.srobo.motors.motor_value")
+def wapp_motors_motor_value(board, index, value):
     g["motor_boards"][board]["motors"][index]["value"] = value
 
 
-@wapp.register("org.srobo.motor")
-def wapp_get_motor(board, index):
+@wapp.register("org.srobo.motors.get_motor")
+def wapp_motors_get_motor(board, index):
     return g["motor_boards"][board]["motors"][index]
 
 
-@wapp.register("org.srobo.motor_boards")
-def wapp_get_motors():
+@wapp.register("org.srobo.motors.get_board")
+def wapp_motors_get_board(index):
+    return g["motor_boards"][index]
+
+
+@wapp.register("org.srobo.motors.all_boards")
+def wapp_motors_all_boards():
     return g["motor_boards"]
 
 

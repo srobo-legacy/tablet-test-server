@@ -59,29 +59,17 @@ g = dict(zone=0,
                  ]
              )
          ],
-         motor_boards=[
-             dict(
-                 serial_number="abc",
-                 motors=[
-                     dict(value=0),
-                     dict(value=0)
-                 ]
-             ),
-             dict(
-                 serial_number="def",
-                 motors=[
-                     dict(value=0)
-                 ]
-             ),
-             dict(
-                 serial_number="ghi",
-                 motors=[
-                     dict(value=0),
-                     dict(value=0),
-                     dict(value=0)
-                 ]
-             )
-         ],
+         motor_boards={
+             "abcde": {
+                 "motors": [{"value": 0}, {"value": 0}]
+             },
+             "fghij": {
+                 "motors": [{"value": 0}]
+             },
+             "klmno": {
+                 "motors": [{"value": 0}, {"value": 0}, {"value": 0}]
+             },
+         },
          ruggeduinos=[
              dict(
                  serial_number="abc",
@@ -265,8 +253,8 @@ def wapp_motors_get_motor(board, index):
 
 
 @wapp.register("org.srobo.motors.get_board")
-def wapp_motors_get_board(index):
-    return g["motor_boards"][index]
+def wapp_motors_get_board(serial_number):
+    return g["motor_boards"][serial_number]
 
 
 @wapp.register("org.srobo.motors.all_boards")

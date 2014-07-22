@@ -69,64 +69,58 @@ g = dict(zone=0,
                  "motors": [{"value": 0}, {"value": 0}, {"value": 0}]
              },
          },
-         ruggeduinos=[
-             dict(
-                 serial_number="abc",
-                 pins=[
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
+         ruggeduinos={
+             "abcde": {
+                 "pins": [
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"}
                  ]
-             ),
-             dict(
-                 serial_number="def",
-                 pins=[
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
+             },
+             "fghij": {
+                 "pins": [
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"}
                  ]
-             ),
-             dict(
-                 serial_number="ghi",
-                 pins=[
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=False, type="digital"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
-                     dict(mode=None, value=0, type="analogue"),
+             },
+             "klmno": {
+                 "pins": [
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": False, "type": "digital"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"},
+                     {"mode": None, "value": 0, "type": "analogue"}
                  ]
-             )
-         ])
-
+             }
+         })
 
 ################################################################################
 wapp = wamp.Application()
@@ -266,24 +260,29 @@ def wapp_motors_all_boards():
     return g["motor_boards"]
 
 
-@wapp.register("org.srobo.ruggeduinos")
-def wapp_get_motors():
+@wapp.subscribe("org.srobo.ruggeduinos.pin_mode")
+def wapp_ruggeduinos_pin_mode(board, index, mode):
+    g["ruggeduinos"][board]["pins"][index]["mode"] = mode
+
+
+@wapp.subscribe("org.srobo.ruggeduinos.pin_value")
+def wapp_ruggeduinos_pin_value(board, index, value):
+    g["ruggeduinos"][board]["pins"][index]["value"] = value
+
+
+@wapp.register("org.srobo.ruggeduinos.get_pin")
+def wapp_ruggeduinos_get_pin(board, index):
+    return g["ruggeduinos"][board]["pins"][index]
+
+
+@wapp.register("org.srobo.ruggeduinos.get_board")
+def wapp_ruggeduinos_get_board(serial_number):
+    return g["ruggeduinos"][serial_number]
+
+
+@wapp.register("org.srobo.ruggeduinos.all_boards")
+def wapp_ruggeduinos_all_boards():
     return g["ruggeduinos"]
-
-
-@wapp.subscribe("org.srobo.io.mode")
-def wapp_io_mode(board, pin, mode):
-    g["ruggeduinos"][board]["pins"][pin]["mode"] = mode
-
-
-@wapp.subscribe("org.srobo.io.value")
-def wapp_io_value(board, pin, value):
-    g["ruggeduinos"][board]["pins"][pin]["value"] = value
-
-
-@wapp.register("org.srobo.io.pin")
-def wapp_get_io_pin(board, pin):
-    return g["ruggeduinos"][board]["pins"][pin]
 
 
 @wapp.register("org.srobo.battery")

@@ -21,7 +21,10 @@ def custom_pages_info():
                 "title": "My Custom Component",
                 "name": "my-custom-component",
                 "icon": "cubes",
-                "url": "/static/elements/my-custom-component/index.html"
+                "import_url": "/static/elements/my-custom-component/index.html",
+                "elements": {
+                    "online": "my-custom-component"
+                }
             }
         ]
     )

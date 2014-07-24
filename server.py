@@ -139,6 +139,11 @@ def log(m):
     g["log"].append(m)
 
 
+@wapp.register("org.srobo.hello")
+def wapp_hello(client_version):
+    return True if random.randint(0, 10) == 0 else False
+
+
 @wapp.register("org.srobo.zone")
 def wapp_get_zone():
     return g["zone"]

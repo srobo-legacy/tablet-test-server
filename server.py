@@ -20,6 +20,14 @@ g = dict(zone=0,
          state="stopped",
          pyenv=dict(version=1),
          project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
+         power_outputs=[
+             {"state": False},
+             {"state": False},
+             {"state": False},
+             {"state": False},
+             {"state": False},
+             {"state": False}
+         ],
          servo_boards={
              "abcde": {
                  "servos": [
@@ -218,6 +226,16 @@ def wapp_get_project_name():
 @wapp.register("org.srobo.project.version")
 def wapp_get_project_version():
     return g["project"]["version"]
+
+
+@wapp.subscribe("org.srobo.power.output_state")
+def wapp_power_output_state(index, state):
+    g["power_outputs"][index]["state"] = state
+
+
+@wapp.register("org.srobo.power.get_output_state")
+def wapp_power_get_output_state(index):
+    return g["power_outputs"][index]["state"]
 
 
 @wapp.subscribe("org.srobo.servos.servo_value")

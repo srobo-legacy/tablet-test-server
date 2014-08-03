@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import base64
+import os
+import random
+
 import flask
 import crochet; crochet.setup()
 import twisted.internet
-import random
-import os
 from autobahn.twisted import wamp
 
 
@@ -129,6 +130,7 @@ g = dict(zone=0,
                  ]
              }
          })
+
 
 ################################################################################
 wapp = wamp.Application()

@@ -183,6 +183,11 @@ def wapp_get_old_logs():
     return g["old_logs"]
 
 
+@wapp.register("org.srobo.logs.get_old")
+def wapp_logs_get_old(i):
+    return g["old_logs"][i]
+
+
 def sleep(delay):
     d = twisted.internet.defer.Deferred()
     twisted.internet.reactor.callLater(delay, d.callback, None)

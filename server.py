@@ -12,12 +12,14 @@ from autobahn.twisted import wamp
 g = dict(zone=0,
          mode="dev",
          battery=dict(level=1),
-         log=[],
-         old_logs=[
-             "This is an old log.",
-             "This is another\nold log.",
-             "Cats."
-         ],
+         logs={
+             "current": [],
+             "old": [
+                 "This is an old log.",
+                 "This is another\nold log.",
+                 "Cats."
+             ],
+         },
          state="stopped",
          pyenv=dict(version=1),
          project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
@@ -138,7 +140,7 @@ wapp = wamp.Application()
 
 def log(m):
     wapp.session.publish("org.srobo.log", m)
-    g["log"].append(m)
+    g["logs"]["current"].append(m)
 
 
 @wapp.register("org.srobo.hello")
@@ -170,22 +172,22 @@ def wapp_sub_mode(mode):
 
 @wapp.subscribe("org.srobo.log")
 def wrap_sub_log(log):
-    g["log"].append(log)
+    g["logs"]["current"].append(log)
 
 
 @wapp.register("org.srobo.log")
 def wapp_get_log():
-    return "\n".join(g["log"])
+    return "\n".join(g["logs"]["current"])
 
 
 @wapp.register("org.srobo.old_logs")
 def wapp_get_old_logs():
-    return g["old_logs"]
+    return g["logs"]["old"]
 
 
 @wapp.register("org.srobo.logs.get_old")
 def wapp_logs_get_old(i):
-    return g["old_logs"][i]
+    return g["logs"]["old"][i]
 
 
 def sleep(delay):

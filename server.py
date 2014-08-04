@@ -175,12 +175,12 @@ def wrap_sub_log(log):
     g["logs"]["current"].append(log)
 
 
-@wapp.register("org.srobo.log")
+@wapp.register("org.srobo.logs.current")
 def wapp_get_log():
     return "\n".join(g["logs"]["current"])
 
 
-@wapp.register("org.srobo.old_logs")
+@wapp.register("org.srobo.logs.all_old")
 def wapp_get_old_logs():
     return g["logs"]["old"]
 

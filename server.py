@@ -9,129 +9,134 @@ import twisted.internet
 from autobahn.twisted import wamp
 
 
-g = dict(zone=0,
-         mode="dev",
-         battery=dict(level=1),
-         logs={
-             "current": [],
-             "old": [
-                 "This is an old log.",
-                 "This is another\nold log.",
-                 "Cats."
-             ],
-         },
-         state="stopped",
-         pyenv=dict(version=1),
-         project=dict(name="my project", version="2ae01472317d1935a84797ec1983ae243fc6aa28"),
-         power_outputs=[
-             {"state": False},
-             {"state": False},
-             {"state": False},
-             {"state": False},
-             {"state": False},
-             {"state": False}
-         ],
-         servo_boards={
-             "abcde": {
-                 "servos": [
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50}
-                 ]
-             },
-             "fghij": {
-                 "servos": [
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50}
-                 ]
-             },
-             "klmno": {
-                 "servos": [
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50},
-                     {"value": 50}
-                 ]
-             }
-         },
-         motor_boards={
-             "abcde": {
-                 "motors": [{"value": 0}, {"value": 0}]
-             },
-             "fghij": {
-                 "motors": [{"value": 0}]
-             },
-             "klmno": {
-                 "motors": [{"value": 0}, {"value": 0}, {"value": 0}]
-             },
-         },
-         ruggeduinos={
-             "abcde": {
-                 "pins": [
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"}
-                 ]
-             },
-             "fghij": {
-                 "pins": [
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"}
-                 ]
-             },
-             "klmno": {
-                 "pins": [
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": False, "type": "digital"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"},
-                     {"mode": None, "value": 0, "type": "analogue"}
-                 ]
-             }
-         })
+g = {
+    "zone": 0,
+    "mode": "dev",
+    "battery": {"level": 1},
+    "logs": {
+        "current": [],
+        "old": [
+            "This is an old log.",
+            "This is another\nold log.",
+            "Cats."
+        ],
+    },
+    "state": "stopped",
+    "pyenv": {"version": 1},
+    "project": {
+        "name": "my project",
+        "version": "2ae01472317d1935a84797ec1983ae243fc6aa28"
+    },
+    "power_outputs": [
+        {"state": False},
+        {"state": False},
+        {"state": False},
+        {"state": False},
+        {"state": False},
+        {"state": False}
+    ],
+    "servo_boards": {
+        "abcde": {
+            "servos": [
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50}
+            ]
+        },
+        "fghij": {
+            "servos": [
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50}
+            ]
+        },
+        "klmno": {
+            "servos": [
+                {"value": 50},
+                {"value": 50},
+                {"value": 50},
+                {"value": 50}
+            ]
+        }
+    },
+    "motor_boards": {
+        "abcde": {
+            "motors": [{"value": 0}, {"value": 0}]
+        },
+        "fghij": {
+            "motors": [{"value": 0}]
+        },
+        "klmno": {
+            "motors": [{"value": 0}, {"value": 0}, {"value": 0}]
+        },
+    },
+    "ruggeduinos": {
+        "abcde": {
+            "pins": [
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"}
+            ]
+        },
+        "fghij": {
+            "pins": [
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"}
+            ]
+        },
+        "klmno": {
+            "pins": [
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": False, "type": "digital"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"},
+                {"mode": None, "value": 0, "type": "analogue"}
+            ]
+        }
+    }
+}
 
 
 ################################################################################

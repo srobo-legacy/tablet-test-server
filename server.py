@@ -359,9 +359,9 @@ def app_get_mode():
     return flask.jsonify(zone=g["mode"])
 
 
-@app.route("/log")
-def app_get_log():
-    return flask.jsonify(log="\n".join(g["log"]))
+@app.route("/logs/current")
+def app_get_current_log():
+    return flask.jsonify(log="\n".join(g["logs"]["current"]))
 
 
 @app.route("/battery")

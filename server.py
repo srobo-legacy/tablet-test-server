@@ -154,7 +154,8 @@ def log(m):
 
 @wapp.register("org.srobo.hello")
 def wapp_hello(client_version):
-    return True if random.randint(0, 10) == 0 else False
+    compatible = False if random.randint(0, 10) == 0 else True
+    return {"compatible": compatible}
 
 
 @wapp.register("org.srobo.zone")

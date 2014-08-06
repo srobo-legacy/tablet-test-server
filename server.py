@@ -13,14 +13,12 @@ g = {
     "zone": 0,
     "mode": "dev",
     "battery": {"level": 1},
-    "logs": {
-        "current": [],
-        "old": [
-            "This is an old log.",
-            "This is another\nold log.",
-            "Cats."
-        ],
-    },
+    "logs": [
+        {"type": "current", "name": "current", "contents": []},
+        {"type": "old", "name": "old_1", "contents": ["This is an old log."]},
+        {"type": "old", "name": "old_2", "contents": ["This is another", "old log."]},
+        {"type": "old", "name": "old_3", "contents": ["Cats."]},
+    ],
     "state": "stopped",
     "pyenv": {"version": 1},
     "project": {
@@ -143,9 +141,15 @@ g = {
 wapp = wamp.Application()
 
 
+def find_log(name):
+    for log in g["logs"]:
+        if log["name"] == name:
+            return log
+
+
 def log(m):
-    wapp.session.publish("org.srobo.log", m)
-    g["logs"]["current"].append(m)
+    wapp.session.publish("org.srobo.logs.append", "current", m)
+    find_log("current")["contents"].append(m)
 
 
 @wapp.register("org.srobo.hello")
@@ -175,24 +179,19 @@ def wapp_sub_mode(mode):
     g["mode"] = mode
 
 
-@wapp.subscribe("org.srobo.log")
-def wrap_sub_log(log):
-    g["logs"]["current"].append(log)
+@wapp.subscribe("org.srobo.logs.append")
+def wrap_sub_log(log, text):
+    find_log(log)["contents"].append(log)
 
 
-@wapp.register("org.srobo.logs.current")
-def wapp_get_log():
-    return "\n".join(g["logs"]["current"])
+@wapp.register("org.srobo.logs.all")
+def wapp_logs_all():
+    return g["logs"]
 
 
-@wapp.register("org.srobo.logs.all_old")
-def wapp_get_old_logs():
-    return g["logs"]["old"]
-
-
-@wapp.register("org.srobo.logs.get_old")
-def wapp_logs_get_old(i):
-    return g["logs"]["old"][i]
+@wapp.register("org.srobo.logs.get")
+def wapp_logs_get(name):
+    return find_log(name)
 
 
 def sleep(delay):

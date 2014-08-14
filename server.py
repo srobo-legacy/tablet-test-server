@@ -377,13 +377,6 @@ if __name__ == "__main__":
 
     start_wamp()
 
-    def publish_battery():
-        if g["battery"]["level"] > 0:
-            g["battery"]["level"] -= 0.001
-            wapp.session.publish("org.srobo.battery.level", g["battery"]["level"])
-    l1 = twisted.internet.task.LoopingCall(publish_battery)
-    l1.start(1, now=False)
-
     temp_images = os.listdir("temp_images")
     def publish_camera():
         src = "/temp_images/{}".format(random.choice(temp_images))

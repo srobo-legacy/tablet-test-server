@@ -364,16 +364,6 @@ def app_get_current_log():
     return flask.jsonify(log="\n".join(g["logs"]["current"]))
 
 
-@app.route("/battery")
-def app_get_battery():
-    return flask.jsonify(battery=g["battery"])
-
-
-@app.route("/battery/level")
-def app_get_battery_level():
-    return flask.jsonify(level=g["battery"]["level"])
-
-
 ################################################################################
 if __name__ == "__main__":
     import sys

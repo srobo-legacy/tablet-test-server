@@ -138,10 +138,12 @@ g = {
 
 
 ################################################################################
-wapp = wamp.Application()
+class MyComponent(wamp.ApplicationSession):
+    def onJoin(self, details):
+        print(details)
 
 
-def find_log(name):
+"""def find_log(name):
     for log in g["logs"]:
         if log["name"] == name:
             return log
@@ -329,7 +331,7 @@ def wapp_get_battery():
 
 @wapp.register("org.srobo.battery.level")
 def wapp_get_battery_level():
-    return g["battery"]["level"]
+    return g["battery"]["level"]"""
 
 
 ################################################################################
@@ -372,16 +374,16 @@ if __name__ == "__main__":
 
     @crochet.run_in_reactor
     def start_wamp():
-        wapp.run("ws://0.0.0.0:9000", "srobo", standalone=True,
-                 start_reactor=False)
+        runner = wamp.ApplicationRunner(url="ws://0.0.0.0:9000", realm="srobo", standalone=True)
+        runner.run(MyComponent, start_reactor=False)
 
     start_wamp()
 
-    temp_images = os.listdir("temp_images")
+    """temp_images = os.listdir("temp_images")
     def publish_camera():
         src = "/temp_images/{}".format(random.choice(temp_images))
         wapp.session.publish("org.srobo.camera.image", src)
     l2 = twisted.internet.task.LoopingCall(publish_camera)
-    l2.start(10, now=False)
+    l2.start(10, now=False)"""
 
     app.run(host="0.0.0.0", port=8000)

@@ -7,6 +7,7 @@ import flask
 import crochet; crochet.setup()
 import twisted.internet
 from autobahn.twisted import wamp
+from autobahn.twisted.util import sleep
 from twisted.internet.defer import inlineCallbacks
 
 
@@ -173,6 +174,12 @@ class MyComponent(wamp.ApplicationSession):
         yield self.register(self.wapp_ruggeduinos_get_board, "org.srobo.ruggeduinos.get_board")
         yield self.register(self.wapp_ruggeduinos_all_boards, "org.srobo.ruggeduinos.all_boards")
 
+        temp_images = os.listdir("temp_images")
+        while True:
+            src = "/temp_images/{}".format(random.choice(temp_images))
+            self.publish("org.srobo.camera.image", src)
+            yield sleep(10)
+
     def find_log(self, name):
         for log in g["logs"]:
             if log["name"] == name:
@@ -334,12 +341,5 @@ if __name__ == "__main__":
         runner.run(MyComponent, start_reactor=False)
 
     start_wamp()
-
-    """temp_images = os.listdir("temp_images")
-    def publish_camera():
-        src = "/temp_images/{}".format(random.choice(temp_images))
-        wapp.session.publish("org.srobo.camera.image", src)
-    l2 = twisted.internet.task.LoopingCall(publish_camera)
-    l2.start(10, now=False)"""
 
     app.run(host="0.0.0.0", port=8000)

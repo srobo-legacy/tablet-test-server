@@ -306,6 +306,7 @@ class MyBroker(wamp.Broker):
         wamp.Broker.processSubscribe(self, session, subscribe)
         print("SUBSCRIPTION", session, subscribe.topic)
 
+
 class MyApplicationRunner:
     def __init__(self, url, realm, extra = None, standalone = False,
         debug = False, debug_wamp = False, debug_app = False):

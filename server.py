@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import base64
 import os
 import random
@@ -6,6 +8,7 @@ import random
 import flask
 import crochet; crochet.setup()
 import twisted.internet
+from autobahn import util
 from autobahn.wamp import message
 from autobahn.twisted import wamp
 from autobahn.wamp.types import ComponentConfig
@@ -302,9 +305,19 @@ class MyComponent(wamp.ApplicationSession):
 
 
 class MyBroker(wamp.Broker):
+    @inlineCallbacks
     def processSubscribe(self, session, subscribe):
         wamp.Broker.processSubscribe(self, session, subscribe)
+        if subscribe.topic == "org.srobo.mode":
+            yield self.publish(session, u"org.srobo.mode", g["mode"])
         print("SUBSCRIPTION", session, subscribe.topic)
+
+    @inlineCallbacks
+    def publish(self, session, topic, *args, **kwargs):
+        print("Publishing", topic, args, kwargs)
+        request = util.id()
+        msg = message.Publish(request, topic, args = args, kwargs = kwargs)
+        yield session._transport.send(msg)
 
 
 class MyApplicationRunner:

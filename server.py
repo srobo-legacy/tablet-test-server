@@ -305,11 +305,11 @@ class MyComponent(wamp.ApplicationSession):
 
 
 class MyBroker(wamp.Broker):
-    @inlineCallbacks
+    #@inlineCallbacks
     def processSubscribe(self, session, subscribe):
         wamp.Broker.processSubscribe(self, session, subscribe)
         if subscribe.topic == "org.srobo.mode":
-            yield self.publish(session, u"org.srobo.mode", g["mode"])
+            pass #yield self.publish(session, u"org.srobo.mode", g["mode"])
         print("SUBSCRIPTION", session, subscribe.topic)
 
     @inlineCallbacks

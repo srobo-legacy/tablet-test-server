@@ -224,6 +224,7 @@ class MyComponent(wamp.ApplicationSession):
     def wapp_logs_get(self, name):
         return self.find_log(name)
 
+    @inlineCallbacks
     def wapp_start(self):
         self.publish("org.srobo.project.name", g["project"]["name"])
         self.publish("org.srobo.project.version", g["project"]["version"])
@@ -237,6 +238,7 @@ class MyComponent(wamp.ApplicationSession):
 
         self.log("Robot started.")
 
+    @inlineCallbacks
     def wapp_stop(self):
         g["state"] = "stopping"
         self.publish("org.srobo.state", "stopping")

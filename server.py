@@ -304,91 +304,6 @@ class MyComponent(wamp.ApplicationSession):
         return g["ruggeduinos"]
 
 
-class MyBroker(wamp.Broker):
-    #@inlineCallbacks
-    def processSubscribe(self, session, subscribe):
-        wamp.Broker.processSubscribe(self, session, subscribe)
-        if subscribe.topic == "org.srobo.mode":
-            pass #yield self.publish(session, u"org.srobo.mode", g["mode"])
-        print("SUBSCRIPTION", session, subscribe.topic)
-
-    @inlineCallbacks
-    def publish(self, session, topic, *args, **kwargs):
-        print("Publishing", topic, args, kwargs)
-        request = util.id()
-        msg = message.Publish(request, topic, args = args, kwargs = kwargs)
-        yield session._transport.send(msg)
-
-
-class MyApplicationRunner:
-    def __init__(self, url, realm, extra = None, standalone = False,
-        debug = False, debug_wamp = False, debug_app = False):
-        self.url = url
-        self.realm = realm
-        self.extra = extra or dict()
-        self.standalone = standalone
-        self.debug = debug
-        self.debug_wamp = debug_wamp
-        self.debug_app = debug_app
-        self.make = None
-
-    def run(self, make, start_reactor = True):
-        from twisted.internet import reactor
-
-        isSecure, host, port, resource, path, params = parseWsUrl(self.url)
-
-        ## start logging to console
-        if self.debug or self.debug_wamp or self.debug_app:
-            log.startLogging(sys.stdout)
-
-        ## run an embedded router if ask to start standalone
-        if self.standalone:
-
-            from twisted.internet.endpoints import serverFromString
-
-            router_factory = wamp.RouterFactory()
-            router_factory.router.broker = MyBroker
-            session_factory = wamp.RouterSessionFactory(router_factory)
-
-            transport_factory = WampWebSocketServerFactory(session_factory, debug = self.debug, debug_wamp = self.debug_wamp)
-            transport_factory.setProtocolOptions(failByDrop = False)
-
-            server = serverFromString(reactor, "tcp:{}".format(port))
-            server.listen(transport_factory)
-
-        ## factory for use ApplicationSession
-        def create():
-            cfg = ComponentConfig(self.realm, self.extra)
-            try:
-                session = make(cfg)
-            except Exception:
-                ## the app component could not be created .. fatal
-                log.err()
-                reactor.stop()
-            else:
-                session.debug_app = self.debug_app
-                return session
-
-        ## create a WAMP-over-WebSocket transport client factory
-        transport_factory = WampWebSocketClientFactory(create, url = self.url,
-            debug = self.debug, debug_wamp = self.debug_wamp)
-
-        ## start the client from a Twisted endpoint
-        from twisted.internet.endpoints import clientFromString
-
-        if isSecure:
-            endpoint_descriptor = "ssl:{}:{}".format(host, port)
-        else:
-            endpoint_descriptor = "tcp:{}:{}".format(host, port)
-
-        client = clientFromString(reactor, endpoint_descriptor)
-        client.connect(transport_factory)
-
-        ## now enter the Twisted reactor loop
-        if start_reactor:
-            reactor.run()
-
-
 ################################################################################
 app = flask.Flask(__name__, template_folder=".", static_folder=".",
                   static_url_path="")
@@ -429,8 +344,8 @@ if __name__ == "__main__":
 
     @crochet.run_in_reactor
     def start_wamp():
-        runner = MyApplicationRunner(url="ws://0.0.0.0:9000", realm="srobo",
-                                     standalone=True)
+        runner = wamp.ApplicationRunner(url="ws://0.0.0.0:9000", realm="srobo",
+                                        standalone=True)
         runner.run(MyComponent, start_reactor=False)
 
     start_wamp()

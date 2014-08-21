@@ -95,52 +95,52 @@ g = {
     "ruggeduinos": {
         "abcde": {
             "pins": [
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"}
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"}
             ]
         },
         "fghij": {
             "pins": [
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"}
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"}
             ]
         },
         "klmno": {
             "pins": [
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": False, "type": "digital"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"},
-                {"mode": None, "value": 0, "type": "analogue"}
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": False, "type": "digital"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"},
+                {"mode": "input", "value": 0, "type": "analogue"}
             ]
         }
     }

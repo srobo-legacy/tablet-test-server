@@ -53,27 +53,7 @@ g = {
                 {"value": 50},
                 {"value": 50},
                 {"value": 50},
-                {"value": 50}
-            ]
-        },
-        "fghij": {
-            "servos": [
                 {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50},
-                {"value": 50}
-            ]
-        },
-        "klmno": {
-            "servos": [
                 {"value": 50},
                 {"value": 50},
                 {"value": 50},
@@ -86,45 +66,14 @@ g = {
             "motors": [{"value": 0}, {"value": 0}]
         },
         "fghij": {
-            "motors": [{"value": 0}]
-        },
-        "klmno": {
-            "motors": [{"value": 0}, {"value": 0}, {"value": 0}]
-        },
+            "motors": [{"value": 0}, {"value": 0}]
+        }
     },
     "ruggeduinos": {
         "abcde": {
             "pins": [
                 {"mode": "input", "value": False, "type": "digital"},
                 {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"}
-            ]
-        },
-        "fghij": {
-            "pins": [
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": False, "type": "digital"},
-                {"mode": "input", "value": 0, "type": "analogue"},
-                {"mode": "input", "value": 0, "type": "analogue"}
-            ]
-        },
-        "klmno": {
-            "pins": [
                 {"mode": "input", "value": False, "type": "digital"},
                 {"mode": "input", "value": False, "type": "digital"},
                 {"mode": "input", "value": False, "type": "digital"},

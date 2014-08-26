@@ -142,9 +142,10 @@ class MyComponent(wamp.ApplicationSession):
             if log["name"] == name:
                 return log
 
-    def log(self, m):
-        self.publish("org.srobo.logs.append", "current", m)
-        self.find_log("current")["contents"].append(m)
+    def log(self, msg):
+        line_no = len(self.find_log("current")["contents"])
+        self.publish("org.srobo.logs.append", "current", msg, line_no)
+        self.find_log("current")["contents"].append(msg)
 
     def wapp_hello(self, client_version):
         compatible = False if random.randint(0, 10) == 0 else True

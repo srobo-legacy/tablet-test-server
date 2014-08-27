@@ -186,7 +186,7 @@ class MyComponent(wamp.ApplicationSession):
         g["state"] = "started"
         self.publish("org.srobo.state", "started")
 
-        self.log("Robot started.")
+        self.log("User code started.")
 
     @inlineCallbacks
     def wapp_stop(self):
@@ -196,7 +196,7 @@ class MyComponent(wamp.ApplicationSession):
         g["state"] = "stopped"
         self.publish("org.srobo.state", "stopped")
 
-        self.log("Robot stopped.")
+        self.log("User code stopped.")
 
     def wapp_get_state(self):
         return g["state"]

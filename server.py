@@ -134,7 +134,7 @@ class MyComponent(wamp.ApplicationSession):
         temp_images = os.listdir("temp_images")
         while True:
             src = "/temp_images/{}".format(random.choice(temp_images))
-            self.publish("org.srobo.camera.image", src)
+            self.publish("org.srobo.camera.image", src, [{"code": 10, "x": 10, "y": 10, "width": 100, "height": 100}])
             yield sleep(10)
 
     def find_log(self, name):

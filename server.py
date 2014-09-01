@@ -134,7 +134,16 @@ class MyComponent(wamp.ApplicationSession):
         temp_images = os.listdir("temp_images")
         while True:
             src = "/temp_images/{}".format(random.choice(temp_images))
-            self.publish("org.srobo.camera.image", src, [{"code": 10, "x": 10, "y": 10, "width": 100, "height": 100}])
+            markers = []
+            for i in range(10):
+                markers.append({
+                    "code": i,
+                    "x": random.randint(0, 2000),
+                    "y": random.randint(0, 2000),
+                    "width": random.randint(100, 200),
+                    "height": random.randint(100, 200)
+                })
+            self.publish("org.srobo.camera.image", src, markers)
             yield sleep(10)
 
     def find_log(self, name):

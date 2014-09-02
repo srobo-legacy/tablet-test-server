@@ -136,11 +136,11 @@ class MyComponent(wamp.ApplicationSession):
         while True:
             src = "/temp_images/{}".format(random.choice(temp_images))
             markers = []
-            for i in range(10):
-                x = random.randint(0, 2000)
-                y = random.randint(0, 2000)
-                size = random.randint(100, 200)
-                m = functools.partial(random.randint, 0, 25)
+            for i in range(5):
+                x = random.randint(0, 1500)
+                y = random.randint(0, 1500)
+                size = random.randint(200, 500)
+                m = functools.partial(random.randint, 0, 50)
                 markers.append({
                     "code": i,
                     "distance": random.randint(25, 300) / 100.0,

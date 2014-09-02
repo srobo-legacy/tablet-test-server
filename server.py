@@ -2,8 +2,9 @@
 from __future__ import print_function
 
 import base64
-import os
+import functools
 import random
+import os
 
 import flask
 import crochet; crochet.setup()
@@ -139,10 +140,16 @@ class MyComponent(wamp.ApplicationSession):
                 x = random.randint(0, 2000)
                 y = random.randint(0, 2000)
                 size = random.randint(100, 200)
+                m = functools.partial(random.randint, 0, 25)
                 markers.append({
                     "code": i,
                     "distance": random.randint(25, 300) / 100.0,
-                    "vertices": [(x, y), (x + size, y), (x + size, y + size), (x, y + size)]
+                    "vertices": [
+                        (x + m(), y + m()),
+                        (x + m() + size + m(), y + m()),
+                        (x + m() + size, y + m() + size),
+                        (x + m(), y + m() + size)
+                    ]
                 })
             self.publish("org.srobo.camera.image", src, markers)
             yield sleep(10)

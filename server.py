@@ -136,13 +136,12 @@ class MyComponent(wamp.ApplicationSession):
             src = "/temp_images/{}".format(random.choice(temp_images))
             markers = []
             for i in range(10):
+                x = random.randint(0, 2000)
+                y = random.randint(0, 2000)
                 size = random.randint(100, 200)
                 markers.append({
                     "code": i,
-                    "x": random.randint(0, 2000),
-                    "y": random.randint(0, 2000),
-                    "width": size,
-                    "height": size
+                    "vertices": [(x, y), (x + size, y), (x + size, y + size), (x, y + size)]
                 })
             self.publish("org.srobo.camera.image", src, markers)
             yield sleep(10)

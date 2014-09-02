@@ -141,6 +141,7 @@ class MyComponent(wamp.ApplicationSession):
                 size = random.randint(100, 200)
                 markers.append({
                     "code": i,
+                    "distance": random.randint(25, 300) / 100.0,
                     "vertices": [(x, y), (x + size, y), (x + size, y + size), (x, y + size)]
                 })
             self.publish("org.srobo.camera.image", src, markers)

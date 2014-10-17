@@ -31,7 +31,7 @@ g = {
         {"type": "old", "name": "old_3", "title": "#3", "contents": ["Cats."]},
     ],
     "state": "stopped",
-    "pyenv": {"version": 1},
+    "environment": {"version": 1},
     "project": {
         "name": "my project",
         "version": "2ae01472317d1935a84797ec1983ae243fc6aa28"
@@ -113,7 +113,7 @@ class MyComponent(wamp.ApplicationSession):
         yield self.register(self.wapp_start, "org.srobo.start")
         yield self.register(self.wapp_stop, "org.srobo.stop")
         yield self.register(self.wapp_get_state, "org.srobo.state")
-        yield self.register(self.wapp_get_pyenv_version, "org.srobo.pyenv.version")
+        yield self.register(self.wapp_get_environment_version, "org.srobo.environment.version")
         yield self.register(self.wapp_get_project_name, "org.srobo.project.name")
         yield self.register(self.wapp_get_project_version, "org.srobo.project.version")
         yield self.subscribe(self.wapp_power_output_state, "org.srobo.power.output_state")
@@ -195,7 +195,7 @@ class MyComponent(wamp.ApplicationSession):
     def wapp_start(self):
         self.publish("org.srobo.project.name", g["project"]["name"])
         self.publish("org.srobo.project.version", g["project"]["version"])
-        self.publish("org.srobo.pyenv.version", g["pyenv"]["version"])
+        self.publish("org.srobo.environment.version", g["environment"]["version"])
 
         g["state"] = "booting"
         self.publish("org.srobo.state", "booting")
@@ -218,8 +218,8 @@ class MyComponent(wamp.ApplicationSession):
     def wapp_get_state(self):
         return g["state"]
 
-    def wapp_get_pyenv_version(self):
-        return g["pyenv"]["version"]
+    def wapp_get_environment_version(self):
+        return g["environment"]["version"]
 
     def wapp_get_project_name(self):
         return g["project"]["name"]

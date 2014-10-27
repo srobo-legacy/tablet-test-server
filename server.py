@@ -132,9 +132,9 @@ class MyComponent(wamp.ApplicationSession):
         yield self.register(self.wapp_ruggeduinos_get_board, "org.srobo.ruggeduinos.get_board")
         yield self.register(self.wapp_ruggeduinos_all_boards, "org.srobo.ruggeduinos.all_boards")
 
-        temp_images = os.listdir("temp_images")
-        while True:
-            src = "/temp_images/{}".format(random.choice(temp_images))
+        temp_images = os.listdir("example_images")
+        while temp_images:
+            src = "/example_images/{}".format(random.choice(temp_images))
             markers = []
             for i in range(random.randint(0, 3)):
                 x = random.randint(0, 1500)
@@ -274,8 +274,8 @@ class MyComponent(wamp.ApplicationSession):
 
 
 ################################################################################
-app = flask.Flask(__name__, template_folder=".", static_folder=".",
-                  static_url_path="")
+app = flask.Flask(__name__, template_folder="interface",
+                  static_folder="interface", static_url_path="")
 
 
 @app.after_request
